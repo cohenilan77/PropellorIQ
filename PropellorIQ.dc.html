@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#f7f5f0;color:#15171a;font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#15171a;text-decoration:none}a:hover{color:#2743d9}
+input{font-family:inherit}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(calc(100vw - 100% - 2 * clamp(20px,4vw,56px)))}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<header style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 clamp(20px,4vw,56px);height:72px;background:rgba(247,245,240,0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(21,23,26,0.1)">
+  <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:baseline;gap:1px;color:#15171a;flex-shrink:0">
+    <span style="font:400 26px/1 'Instrument Serif',serif;letter-spacing:-0.01em">Propellor</span><span style="font:400 26px/1 'Instrument Serif',serif;font-style:italic;color:#2743d9">IQ</span>
+  </a>
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px clamp(14px,2.2vw,30px);min-width:0;font-size:13.5px;font-weight:500">
+    <a href="#work">What we do</a>
+    <a href="#sectors">Sectors</a>
+    <a href="#insights">Insights</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  </sc-if>
+  <div style="display:flex;align-items:center;gap:clamp(12px,2vw,22px);flex-shrink:0">
+    <sc-if value="{{ isPortal }}" hint-placeholder-val="{{ false }}">
+      <span style="font-size:12.5px;color:#6b6f76;white-space:nowrap">{{ clientName }} · Client portal</span>
+      <button onClick="{{ goHome }}" style="height:36px;padding:0;border:0;background:transparent;color:#15171a;font:500 13.5px Manrope,sans-serif;cursor:pointer;white-space:nowrap" style-hover="color:#2743d9">Sign out</button>
+    </sc-if>
+    <sc-if value="{{ notPortal }}" hint-placeholder-val="{{ true }}">
+      <button onClick="{{ goLogin }}" style="height:36px;padding:0;border:0;background:transparent;color:#15171a;font:500 13.5px Manrope,sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap" style-hover="color:#2743d9">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2.5" y="6" width="9" height="6.5" rx="1"></rect><path d="M4.5 6V4.5a2.5 2.5 0 0 1 5 0V6"></path></svg>Client login
+      </button>
+      <a href="#contact" style="height:40px;padding:0 18px;border-radius:999px;background:#15171a;color:#f7f5f0;font:500 13.5px Manrope,sans-serif;display:flex;align-items:center;white-space:nowrap" style-hover="background:#2743d9;color:#f7f5f0">Talk to us</a>
+    </sc-if>
+  </div>
+</header>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<main style="flex:1">
+
+  <section data-screen-label="Hero" style="max-width:1320px;margin:0 auto;padding:clamp(70px,9vw,130px) clamp(20px,4vw,56px) 80px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,0.75fr);gap:56px;align-items:end">
+    <div style="display:flex;flex-direction:column;gap:34px;animation:rise 0.9s ease-out both">
+      <p style="margin:0;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#2743d9">Behavioral science · Applied AI · Since 2013</p>
+      <h1 style="margin:0;font:400 clamp(54px,7.4vw,118px)/0.95 'Instrument Serif',serif;letter-spacing:-0.025em;text-wrap:balance">Hearts,<br><span style="font-style:italic;color:#2743d9">then</span> minds.</h1>
+      <p style="margin:0;font-size:19px;line-height:1.5;color:#45494f;max-width:44ch;text-wrap:pretty">People decide with emotion and explain with reason. We measure the first part, so your strategy is built on how choices are actually made.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a href="#contact" style="height:48px;padding:0 24px;border-radius:999px;background:#2743d9;color:#f7f5f0;font:500 14px Manrope,sans-serif;display:flex;align-items:center;gap:10px" style-hover="background:#15171a;color:#f7f5f0">Talk to us <span>→</span></a>
+        <a href="#work" style="height:48px;padding:0 24px;border-radius:999px;border:1px solid rgba(21,23,26,0.2);font:500 14px Manrope,sans-serif;display:flex;align-items:center" style-hover="border-color:#15171a">What we do</a>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid rgba(21,23,26,0.1);border-radius:6px;padding:26px 26px 28px;display:flex;flex-direction:column;gap:22px;box-shadow:0 30px 60px rgba(21,23,26,0.06);animation:rise 0.9s 0.15s ease-out both">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+        <span style="font:400 22px 'Instrument Serif',serif">What people say vs. what they do</span>
+        <span style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#6b6f76">Illustrative</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <sc-for list="{{ bars }}" as="b" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:13px;color:#45494f">{{ b.label }}</span>
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:10px;align-items:center">
+              <div style="height:8px;background:rgba(21,23,26,0.08);border-radius:999px;overflow:hidden"><div style="height:100%;width:{{ b.stated }};background:#c9ccd4;transform-origin:left;animation:grow 1.2s 0.4s ease-out both"></div></div>
+              <span style="font-size:12px;color:#6b6f76;text-align:right">{{ b.stated }}</span>
+              <div style="height:8px;background:rgba(21,23,26,0.08);border-radius:999px;overflow:hidden"><div style="height:100%;width:{{ b.measured }};background:#2743d9;transform-origin:left;animation:grow 1.2s 0.6s ease-out both"></div></div>
+              <span style="font-size:12px;font-weight:600;color:#2743d9;text-align:right">{{ b.measured }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:18px;font-size:12px;color:#6b6f76;padding-top:4px;border-top:1px solid rgba(21,23,26,0.1)">
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:4px;border-radius:2px;background:#c9ccd4"></span>Stated in surveys</span>
+        <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:4px;border-radius:2px;background:#2743d9"></span>Measured behavior</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Clients" style="border-top:1px solid rgba(21,23,26,0.1);border-bottom:1px solid rgba(21,23,26,0.1);padding:30px 0;overflow:hidden;background:#fff">
+    <div style="max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:22px">
+      <p style="margin:0;font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#6b6f76">Trusted by leadership teams in automotive, beauty, beverage, energy, media and government</p>
+      <div style="overflow:hidden">
+        <div style="display:flex;gap:8px;width:max-content;animation:drift 70s ease-in-out infinite alternate">
+          <sc-for list="{{ clients }}" as="c" hint-placeholder-count="10">
+            <div style="height:56px;padding:0 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#15171a;opacity:0.6;white-space:nowrap" style-hover="opacity:1">
+              <span style="font:{{ c.font }};letter-spacing:{{ c.ls }}">{{ c.name }}</span>
+              <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#6b6f76">{{ c.note }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="insights" data-screen-label="Insights" style="max-width:1320px;margin:0 auto;padding:120px clamp(20px,4vw,56px) 100px;display:flex;flex-direction:column;gap:48px">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px">
+      <h2 style="margin:0;font:400 clamp(36px,4.4vw,64px)/1 'Instrument Serif',serif;letter-spacing:-0.02em">What we know</h2>
+      <p style="margin:0;font-size:15px;color:#6b6f76;max-width:40ch">Four findings that shape every engagement.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:rgba(21,23,26,0.12);border:1px solid rgba(21,23,26,0.12)">
+      <sc-for list="{{ insights }}" as="it" hint-placeholder-count="4">
+        <article style="background:#f7f5f0;padding:34px 30px 38px;display:flex;flex-direction:column;justify-content:space-between;gap:60px;min-height:300px;transition:background 0.3s" style-hover="background:#fff">
+          <span style="font:400 20px 'Instrument Serif',serif;font-style:italic;color:#2743d9">{{ it.n }}</span>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <h3 style="margin:0;font:400 clamp(26px,2.4vw,34px)/1.1 'Instrument Serif',serif;letter-spacing:-0.015em;text-wrap:balance">{{ it.title }}</h3>
+            <p style="margin:0;font-size:14px;line-height:1.6;color:#6b6f76;text-wrap:pretty">{{ it.body }}</p>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="work" data-screen-label="What we do" style="background:#fff;border-top:1px solid rgba(21,23,26,0.1);border-bottom:1px solid rgba(21,23,26,0.1)">
+    <div style="max-width:1320px;margin:0 auto;padding:120px clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:56px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:end">
+        <h2 style="margin:0;font:400 clamp(36px,4.4vw,64px)/1 'Instrument Serif',serif;letter-spacing:-0.02em;text-wrap:balance">Six practices. One question: <span style="font-style:italic;color:#2743d9">why do people choose?</span></h2>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:#6b6f76;max-width:44ch;text-wrap:pretty">Psychologists, researchers and machine-learning engineers on one team. Each practice feeds the others.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px 32px">
+        <sc-for list="{{ practices }}" as="p" hint-placeholder-count="6">
+          <div style="display:flex;flex-direction:column;gap:14px;padding-top:22px;border-top:1px solid rgba(21,23,26,0.15)">
+            <span style="font-size:12px;font-weight:600;letter-spacing:0.1em;color:#2743d9">{{ p.n }}</span>
+            <h3 style="margin:0;font:400 28px/1.1 'Instrument Serif',serif;letter-spacing:-0.01em">{{ p.title }}</h3>
+            <p style="margin:0;font-size:14px;line-height:1.6;color:#6b6f76;text-wrap:pretty">{{ p.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="sectors" data-screen-label="Sectors" style="max-width:1320px;margin:0 auto;padding:120px clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:60px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:20px;position:sticky;top:100px">
+      <h2 style="margin:0;font:400 clamp(36px,4.4vw,64px)/1 'Instrument Serif',serif;letter-spacing:-0.02em;text-wrap:balance">Where emotion decides the outcome.</h2>
+      <p style="margin:0;font-size:15px;line-height:1.6;color:#6b6f76;max-width:40ch">Wherever a decision is made by a person, the same forces apply.</p>
+    </div>
+    <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+      <sc-for list="{{ sectors }}" as="s" hint-placeholder-count="6">
+        <li style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px;align-items:baseline;padding:22px 0;border-top:1px solid rgba(21,23,26,0.15)" style-hover="color:#2743d9">
+          <span style="font:400 26px/1.1 'Instrument Serif',serif">{{ s.name }}</span>
+          <span style="font-size:14px;line-height:1.5;color:#6b6f76">{{ s.note }}</span>
+        </li>
+      </sc-for>
+      <li style="border-top:1px solid rgba(21,23,26,0.15)"></li>
+    </ul>
+  </section>
+
+  <section id="about" data-screen-label="About" style="background:#15171a;color:#f7f5f0">
+    <div style="max-width:1320px;margin:0 auto;padding:120px clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:72px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:48px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <p style="margin:0;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#8fa0f0">The firm</p>
+          <h2 style="margin:0;font:400 clamp(36px,4.4vw,64px)/1 'Instrument Serif',serif;letter-spacing:-0.02em;text-wrap:balance">A research house for the irrational half of every decision.</h2>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:26px">
+          <p style="margin:0;font-size:16px;line-height:1.6;color:rgba(247,245,240,0.78);max-width:48ch;text-wrap:pretty">Founded in 2013 on a simple observation: opinion is felt before it is reasoned. Since then the firm has advised brands, institutions and campaigns across the United States, Europe, Israel and Japan, with a proprietary method we call Hearts then Minds.</p>
+          <ol style="margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+            <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+              <li style="display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:1px solid rgba(247,245,240,0.25)">
+                <strong style="font:400 22px 'Instrument Serif',serif">{{ st.title }}</strong>
+                <span style="font-size:13px;line-height:1.5;color:rgba(247,245,240,0.65)">{{ st.body }}</span>
+              </li>
+            </sc-for>
+          </ol>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:rgba(247,245,240,0.16);border:1px solid rgba(247,245,240,0.16)">
+        <sc-for list="{{ offices }}" as="o" hint-placeholder-count="3">
+          <div style="background:#15171a;padding:28px 26px 30px;display:flex;flex-direction:column;gap:30px">
+            <span style="font-size:11.5px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#8fa0f0">{{ o.role }}</span>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font:400 36px/1 'Instrument Serif',serif;letter-spacing:-0.01em">{{ o.city }}</span>
+              <span style="font-size:13px;line-height:1.5;color:rgba(247,245,240,0.65)">{{ o.detail }}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" data-screen-label="Contact">
+    <div style="max-width:1320px;margin:0 auto;padding:130px clamp(20px,4vw,56px) 44px;display:flex;flex-direction:column;gap:90px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:end">
+        <h2 style="margin:0;font:400 clamp(54px,7.4vw,110px)/0.95 'Instrument Serif',serif;letter-spacing:-0.025em">Talk to <span style="font-style:italic;color:#2743d9">us</span>.</h2>
+        <div style="display:flex;flex-direction:column;gap:16px;font:400 24px 'Instrument Serif',serif">
+          <a href="mailto:info@propelloriq.com" style="border-bottom:1px solid rgba(21,23,26,0.3);align-self:flex-start;padding-bottom:3px;white-space:nowrap">info@propelloriq.com</a>
+          <a href="tel:+16467657465" style="border-bottom:1px solid rgba(21,23,26,0.3);align-self:flex-start;padding-bottom:3px;white-space:nowrap">+1 (646) 765-7465</a>
+          <span style="font:400 13.5px Manrope,sans-serif;color:#6b6f76">25 Kent Avenue, Brooklyn, New York · Tel Aviv · Tokyo</span>
+        </div>
+      </div>
+      <footer style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:12.5px;color:#6b6f76;border-top:1px solid rgba(21,23,26,0.12);padding-top:22px">
+        <span>© 2026 PropellorIQ. All rights reserved.</span>
+        <div style="display:flex;gap:26px"><a href="#" style="color:inherit">LinkedIn</a><a href="#" style="color:inherit">Privacy</a><a href="#" style="color:inherit">Terms</a></div>
+      </footer>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Client login" style="flex:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));min-height:calc(100vh - 72px)">
+  <div style="background:#2743d9;color:#f7f5f0;padding:clamp(40px,6vw,90px);display:flex;flex-direction:column;justify-content:space-between;gap:60px;min-height:360px">
+    <p style="margin:0;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,245,240,0.75)">Client portal</p>
+    <p style="margin:0;font:400 clamp(36px,4vw,60px)/1.02 'Instrument Serif',serif;letter-spacing:-0.02em;max-width:16ch;text-wrap:balance">Your engagement, fieldwork and findings in one place.</p>
+  </div>
+  <form onSubmit="{{ submitLogin }}" style="display:flex;flex-direction:column;justify-content:center;gap:26px;padding:80px clamp(28px,6vw,110px);background:#fff;animation:rise 0.7s ease-out both">
+    <h1 style="margin:0;font:400 44px/1 'Instrument Serif',serif;letter-spacing:-0.02em">Welcome back.</h1>
+    <label style="display:flex;flex-direction:column;gap:8px;font-size:12.5px;font-weight:600;color:#45494f">Work email
+      <input type="email" value="{{ email }}" onChange="{{ setEmail }}" placeholder="name@company.com" style="height:48px;padding:0 14px;border:1px solid rgba(21,23,26,0.2);border-radius:6px;background:#fff;font-size:15px;color:#15171a;outline:none" style-focus="border-color:#2743d9">
+    </label>
+    <label style="display:flex;flex-direction:column;gap:8px;font-size:12.5px;font-weight:600;color:#45494f">Password
+      <input type="password" placeholder="••••••••••" style="height:48px;padding:0 14px;border:1px solid rgba(21,23,26,0.2);border-radius:6px;background:#fff;font-size:15px;color:#15171a;outline:none" style-focus="border-color:#2743d9">
+    </label>
+    <button type="submit" style="height:50px;border:0;border-radius:999px;background:#15171a;color:#f7f5f0;font:500 14px Manrope,sans-serif;cursor:pointer" style-hover="background:#2743d9">Sign in</button>
+    <div style="display:flex;justify-content:space-between;font-size:13px;color:#6b6f76">
+      <a href="#" style="color:#6b6f76">Forgot password</a>
+      <a href="#" onClick="{{ goHome }}" style="color:#6b6f76">← Back to site</a>
+    </div>
+  </form>
+</main>
+</sc-if>
+
+<sc-if value="{{ isPortal }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Client portal" style="flex:1;display:grid;grid-template-columns:230px minmax(0,1fr)">
+  <aside style="border-right:1px solid rgba(21,23,26,0.1);padding:28px 16px;display:flex;flex-direction:column;gap:2px;position:sticky;top:72px;align-self:start;height:calc(100vh - 72px);background:#fff">
+    <sc-for list="{{ portalNav }}" as="t" hint-placeholder-count="5">
+      <button onClick="{{ t.select }}" style="text-align:left;height:40px;padding:0 14px;border:0;border-radius:6px;background:{{ t.bg }};color:{{ t.color }};font:500 13.5px Manrope,sans-serif;cursor:pointer;white-space:nowrap" style-hover="color:#15171a">{{ t.name }}</button>
+    </sc-for>
+    <div style="margin-top:auto;padding:16px 14px;border-top:1px solid rgba(21,23,26,0.1);display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:#6b6f76">
+      <span style="font-weight:600;color:#15171a">Engagement lead</span><span>Partner, Behavioral Practice</span><a href="mailto:info@propelloriq.com" style="color:#2743d9">Message</a>
+    </div>
+  </aside>
+  <div style="padding:44px clamp(20px,4vw,56px) 90px;display:flex;flex-direction:column;gap:32px;max-width:1140px">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:8px;flex:1 1 auto;min-width:0">
+        <p style="margin:0;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#2743d9;white-space:nowrap">{{ clientName }}</p>
+        <h1 style="margin:0;font:400 42px/1 'Instrument Serif',serif;letter-spacing:-0.02em">{{ portalTitle }}</h1>
+      </div>
+      <span style="font-size:13px;color:#6b6f76;flex:0 1 auto">Brand emotional strategy · Week 7 of 12</span>
+    </div>
+
+    <sc-if value="{{ portalOverview }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px">
+      <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+        <div style="background:#fff;border:1px solid rgba(21,23,26,0.1);border-radius:6px;padding:22px 20px 24px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-size:12.5px;font-weight:600;color:#6b6f76">{{ k.label }}</span>
+          <span style="font:400 42px/1 'Instrument Serif',serif;letter-spacing:-0.02em">{{ k.value }}</span>
+          <span style="font-size:12.5px;color:#2743d9">{{ k.delta }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px">
+      <div style="background:#2743d9;color:#f7f5f0;border-radius:6px;padding:26px;min-height:300px;display:flex;flex-direction:column;justify-content:space-between;gap:30px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(247,245,240,0.8)"><span>Gen Z segment</span><span>Wave 3</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <span style="font:400 34px/1.05 'Instrument Serif',serif;letter-spacing:-0.015em;text-wrap:balance">Belonging now outweighs price in the 18–26 cohort.</span>
+          <span style="font-size:13px;color:rgba(247,245,240,0.75)">Fieldwork wave 3 · n = 2,400</span>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(21,23,26,0.1);border-radius:6px;padding:26px;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="margin:0;font:400 26px 'Instrument Serif',serif">Deliverables</h2><a href="#" style="font-size:12.5px;color:#2743d9">View all</a></div>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+          <sc-for list="{{ deliverables }}" as="d" hint-placeholder-count="4">
+            <li style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:14px 0;border-top:1px solid rgba(21,23,26,0.1);align-items:center">
+              <div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:600">{{ d.name }}</span><span style="font-size:12.5px;color:#6b6f76">{{ d.date }}</span></div>
+              <span style="font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:999px;background:{{ d.bg }};color:{{ d.fg }}">{{ d.status }}</span>
+            </li>
+          </sc-for>
+        </ul>
+      </div>
+    </div>
+    <div style="background:#fff;border:1px solid rgba(21,23,26,0.1);border-radius:6px;padding:26px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;font-weight:600;color:#6b6f76">Next session</span><span style="font:400 24px 'Instrument Serif',serif">Wave 3 readout with the engagement team</span><span style="font-size:13px;color:#6b6f76">Thursday · 16:00 CET · New York, Tel Aviv, Tokyo</span></div>
+      <button style="height:42px;padding:0 20px;border-radius:999px;border:0;background:#15171a;color:#f7f5f0;font:500 13.5px Manrope,sans-serif;cursor:pointer;white-space:nowrap" style-hover="background:#2743d9">Join briefing</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ portalList }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#fff;border:1px solid rgba(21,23,26,0.1);border-radius:6px;overflow:hidden">
+      <sc-for list="{{ portalRows }}" as="r" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:24px;align-items:center;padding:18px 24px;border-top:1px solid rgba(21,23,26,0.08)" style-hover="background:#f7f5f0">
+          <div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14.5px;font-weight:600">{{ r.name }}</span><span style="font-size:12.5px;color:#6b6f76">{{ r.meta }}</span></div>
+          <span style="font-size:12.5px;color:#6b6f76">{{ r.date }}</span>
+          <a href="#" style="font-size:12.5px;font-weight:600;color:#2743d9">Open →</a>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+  </div>
+</main>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;login&quot;,&quot;portal&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;'home'|'login'|'portal'&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;clientCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:10,&quot;min&quot;:4,&quot;max&quot;:16,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Clients stream&quot;}}">
+class Component extends DCLogic {
+  state = { view: 'home', email: '', tab: 'Overview' };
+  componentDidMount() { const v = this.props.startView; if (v && v !== this.state.view) this.setState({ view: v }); }
+  go(view) { return e => { if (e && e.preventDefault) e.preventDefault(); this.setState({ view }); window.scrollTo(0, 0); }; }
+  renderVals() {
+    const { view, tab } = this.state;
+    const tabs = ['Overview', 'Engagements', 'Reports', 'Data room', 'Sessions'];
+    const rows = {
+      Engagements: [{ name: 'Brand emotional strategy', meta: 'Active · 12 weeks', date: 'Started Sep 2026' }, { name: 'Gen Z segmentation study', meta: 'Completed', date: 'Jun 2026' }, { name: 'Crisis communication playbook', meta: 'Completed', date: 'Feb 2026' }],
+      Reports: [{ name: 'Wave 2 emotional drivers', meta: 'PDF · 48 pages', date: 'Oct 21' }, { name: 'Message testing: 6 variants', meta: 'Interactive', date: 'Oct 9' }, { name: 'Segment architecture v2', meta: 'PDF · 31 pages', date: 'Sep 27' }, { name: 'Kickoff hypotheses', meta: 'PDF · 12 pages', date: 'Sep 4' }],
+      'Data room': [{ name: 'Survey microdata · waves 1–2', meta: 'CSV · anonymised', date: 'Oct 21' }, { name: 'Social listening corpus', meta: '1.2M posts', date: 'Oct 14' }, { name: 'Model cards', meta: 'Methodology', date: 'Sep 30' }],
+      Sessions: [{ name: 'Wave 3 readout', meta: 'Engagement team', date: 'Thu 16:00 CET' }, { name: 'Creative review', meta: 'With agency', date: 'Nov 12' }, { name: 'Steering committee', meta: 'Quarterly', date: 'Dec 3' }]
+    };
+    return {
+      isHome: view === 'home', isLogin: view === 'login', isPortal: view === 'portal', notPortal: view !== 'portal',
+      goHome: this.go('home'), goLogin: this.go('login'),
+      submitLogin: e => { e.preventDefault(); this.setState({ view: 'portal', tab: 'Overview' }); window.scrollTo(0, 0); },
+      email: this.state.email, setEmail: e => this.setState({ email: e.target.value }),
+      clientName: 'Meridian Group',
+      clients: [
+        { name: 'TOYOTA', font: "600 20px Manrope,sans-serif", ls: '0.12em', note: 'Crisis & digital' },
+        { name: 'SHISEIDO', font: "400 24px 'Instrument Serif',serif", ls: '0.18em', note: 'Positioning' },
+        { name: 'dentsu', font: "500 24px Manrope,sans-serif", ls: '-0.02em', note: 'Senior advisor, Tokyo' },
+        { name: 'SAPPORO', font: "600 19px Manrope,sans-serif", ls: '0.16em', note: 'Brand strategy' },
+        { name: 'HONDA', font: "600 20px Manrope,sans-serif", ls: '0.14em', note: 'Digital & community' },
+        { name: 'MITSUBISHI', font: "500 18px Manrope,sans-serif", ls: '0.14em', note: 'Sponsorship evaluation' },
+        { name: 'TAG Heuer', font: "400 24px 'Instrument Serif',serif", ls: '0.04em', note: 'Community marketing' },
+        { name: 'UNIVERSAL', font: "400 23px 'Instrument Serif',serif", ls: '0.14em', note: 'Community marketing' },
+        { name: 'KEPCO', font: "600 20px Manrope,sans-serif", ls: '0.12em', note: 'Crisis' },
+        { name: 'Government of Japan', font: "400 22px 'Instrument Serif',serif", ls: '0', note: 'Via Dentsu' },
+        { name: 'ThriveDX', font: "600 20px Manrope,sans-serif", ls: '0', note: 'Insights & analytics' }
+      ],
+      bars: [
+        { label: 'Would switch brands for a lower price', stated: '71%', measured: '34%' },
+        { label: 'Choose the sustainable option', stated: '64%', measured: '22%' },
+        { label: 'Trust a brand that shares their values', stated: '38%', measured: '69%' }
+      ],
+      insights: [
+        { n: 'I', title: 'Opinion is felt first and reasoned later.', body: 'Public and consumer opinion forms on emotion, then is decorated with fact. A strategy that opens with the argument arrives too late.' },
+        { n: 'II', title: 'B2B buyers behave like consumers.', body: 'Identity, belonging and trust drive procurement as much as retail. Storytelling is no longer a B2C luxury.' },
+        { n: 'III', title: 'Gen Z buys belonging, not products.', body: 'Brands are asked to supply purpose and comfort. Those who measure it earn loyalty that price cannot buy.' },
+        { n: 'IV', title: 'Data without psychology predicts the past.', body: 'Models trained on clicks explain what happened. Models trained on motive anticipate what people will do next.' }
+      ],
+      practices: [
+        { n: '01', title: 'Behavioral psychology', body: 'The forces behind customer choices and decision-making.' },
+        { n: '02', title: 'Market & opinion research', body: 'Reading the market and the electorate before they move.' },
+        { n: '03', title: 'AI & machine learning', body: 'Models trained on psychological data, not just clicks.' },
+        { n: '04', title: 'Customer segmentation', body: 'Segments built on motive and emotion, not demographics alone.' },
+        { n: '05', title: 'Strategic communication', body: 'Messaging and crisis response that lands where people actually listen.' },
+        { n: '06', title: 'Data engineering & BI', body: 'The infrastructure that makes insight repeatable.' }
+      ],
+      sectors: [
+        { name: 'Consumer & retail', note: 'Emotional branding for Gen Y and Gen Z audiences.' },
+        { name: 'Pharma & healthcare', note: 'Trust, adherence and perception in regulated markets.' },
+        { name: 'Mobility & automotive', note: 'Brand strategy, including our Japan partnership since 2018.' },
+        { name: 'Technology', note: 'B2B demand, positioning and category narratives.' },
+        { name: 'Public affairs & campaigns', note: 'Elections and issue campaigns across the USA, Europe and Israel.' },
+        { name: 'Financial services', note: 'Confidence, loyalty and crisis communication.' }
+      ],
+      steps: [
+        { title: 'Listen', body: 'Measure the emotional field around a brand, issue or candidate.' },
+        { title: 'Model', body: 'Apply AI to psychological and opinion data to find what moves each segment.' },
+        { title: 'Move', body: 'Translate the model into messaging, positioning and creative direction.' }
+      ],
+      offices: [
+        { role: 'Headquarters', city: 'New York', detail: '25 Kent Avenue, Brooklyn. Brand strategy, research and data.' },
+        { role: 'Research & AI', city: 'Tel Aviv', detail: 'Behavioral science and applied AI lab. Campaign and crisis work for Europe and the Middle East.' },
+        { role: 'Strategic partner since 2018', city: 'Tokyo', detail: 'Branding and crisis communication for top-tier multinationals in Japan.' }
+      ],
+      portalNav: tabs.map(name => ({ name, bg: name === tab ? 'rgba(39,67,217,0.08)' : 'transparent', color: name === tab ? '#2743d9' : '#45494f', select: () => this.setState({ tab: name }) })),
+      portalTitle: tab, portalOverview: tab === 'Overview', portalList: tab !== 'Overview', portalRows: rows[tab] || [],
+      kpis: [
+        { label: 'Emotional resonance', value: '68', delta: '+9 since wave 1' },
+        { label: 'Variants tested', value: '24', delta: '6 shortlisted' },
+        { label: 'Respondents', value: '7.2k', delta: 'Across 3 waves' },
+        { label: 'Segments modelled', value: '5', delta: 'v2 architecture' }
+      ],
+      deliverables: [
+        { name: 'Wave 3 emotional drivers report', date: 'Due Nov 6', status: 'In progress', bg: 'rgba(39,67,217,0.1)', fg: '#2743d9' },
+        { name: 'Message testing: 6 variants', date: 'Delivered Oct 9', status: 'Delivered', bg: 'rgba(21,23,26,0.07)', fg: '#45494f' },
+        { name: 'Segment architecture v2', date: 'Delivered Sep 27', status: 'Delivered', bg: 'rgba(21,23,26,0.07)', fg: '#45494f' },
+        { name: 'Creative direction brief', date: 'Due Nov 20', status: 'Scheduled', bg: 'rgba(21,23,26,0.07)', fg: '#45494f' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

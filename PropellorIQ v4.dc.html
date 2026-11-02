@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;1,6..72,200;1,6..72,300&family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0e0f12;color:#ece6da;font-family:'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#ece6da;text-decoration:none}a:hover{color:#b89b6a}
+input,button{font-family:inherit}
+::selection{background:#b89b6a;color:#0e0f12}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.08)}}
+@keyframes lineGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<header style="position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 clamp(20px,4vw,56px);height:76px;background:rgba(14,15,18,0.72);backdrop-filter:blur(18px);border-bottom:1px solid rgba(236,230,218,0.1)">
+  <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:baseline;gap:1px;flex-shrink:0" style-hover="color:#ece6da">
+    <span style="font:300 27px/1 Newsreader,serif;letter-spacing:-0.01em">Propellor</span><span style="font:300 27px/1 Newsreader,serif;font-style:italic;color:#b89b6a">IQ</span>
+  </a>
+  <sc-if value="{{ isSite }}" hint-placeholder-val="{{ true }}">
+  <nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px clamp(14px,2.4vw,34px);min-width:0;font-size:13px;font-weight:400;letter-spacing:0.02em">
+    <sc-for list="{{ navItems }}" as="nv" hint-placeholder-count="5">
+      <a href="#" onClick="{{ nv.go }}" style="color:{{ nv.color }};white-space:nowrap;padding-bottom:3px;border-bottom:1px solid {{ nv.line }}" style-hover="color:#ece6da">{{ nv.name }}</a>
+    </sc-for>
+  </nav>
+  </sc-if>
+  <div style="display:flex;align-items:center;gap:clamp(12px,2vw,24px);flex-shrink:0">
+    <sc-if value="{{ isPortal }}" hint-placeholder-val="{{ false }}">
+      <span style="font-size:12.5px;color:rgba(236,230,218,0.6);white-space:nowrap">{{ clientName }} · Client portal</span>
+      <button onClick="{{ goHome }}" style="height:36px;padding:0;border:0;background:transparent;color:#ece6da;font-size:13px;cursor:pointer;white-space:nowrap" style-hover="color:#b89b6a">Sign out</button>
+    </sc-if>
+    <sc-if value="{{ notPortal }}" hint-placeholder-val="{{ true }}">
+      <button onClick="{{ goLogin }}" style="height:36px;padding:0;border:0;background:transparent;color:rgba(236,230,218,0.75);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap" style-hover="color:#ece6da">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2.5" y="6" width="9" height="6.5" rx="1"></rect><path d="M4.5 6V4.5a2.5 2.5 0 0 1 5 0V6"></path></svg>Client login
+      </button>
+      <a href="#" onClick="{{ goContact }}" style="height:40px;padding:0 20px;border:1px solid rgba(236,230,218,0.35);color:#ece6da;font-size:13px;display:flex;align-items:center;white-space:nowrap;transition:all 0.3s" style-hover="background:#ece6da;color:#0e0f12;border-color:#ece6da">Talk to us</a>
+    </sc-if>
+  </div>
+</header>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<main style="flex:1">
+
+  <section data-screen-label="Hero" style="position:relative;min-height:min(calc(88vh - 76px),760px);display:grid;grid-template-columns:minmax(0,1fr);overflow:hidden">
+    <div style="position:absolute;inset:0;overflow:hidden">
+      <div style="position:absolute;top:0;bottom:0;left:48%;right:0;animation:kenburns 30s ease-out both">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 70% 55%,rgba(184,155,106,0.28),rgba(14,15,18,0) 70%),#15171c"></div><svg viewBox="0 0 1200 1000" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%"><ellipse cx="720" cy="560" rx="81" ry="60" fill="none" stroke="#b89b6a" stroke-opacity="0.52" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="162" ry="120" fill="none" stroke="#b89b6a" stroke-opacity="0.48" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="243.00000000000003" ry="180" fill="none" stroke="#b89b6a" stroke-opacity="0.45" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="324" ry="240" fill="none" stroke="#b89b6a" stroke-opacity="0.41" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="405" ry="300" fill="none" stroke="#b89b6a" stroke-opacity="0.38" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="486.00000000000006" ry="360" fill="none" stroke="#b89b6a" stroke-opacity="0.34" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="567" ry="420" fill="none" stroke="#b89b6a" stroke-opacity="0.31" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="648" ry="480" fill="none" stroke="#b89b6a" stroke-opacity="0.27" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="729" ry="540" fill="none" stroke="#b89b6a" stroke-opacity="0.23" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="810" ry="600" fill="none" stroke="#b89b6a" stroke-opacity="0.20" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="891.0000000000001" ry="660" fill="none" stroke="#b89b6a" stroke-opacity="0.17" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="972.0000000000001" ry="720" fill="none" stroke="#b89b6a" stroke-opacity="0.13" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="1053" ry="780" fill="none" stroke="#b89b6a" stroke-opacity="0.09" stroke-width="0.8"></ellipse><ellipse cx="720" cy="560" rx="1134" ry="840" fill="none" stroke="#b89b6a" stroke-opacity="0.06" stroke-width="0.8"></ellipse></svg>
+      </div>
+      <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,15,18,0.92) 0%,rgba(14,15,18,0.7) 45%,rgba(14,15,18,0.25) 100%),linear-gradient(0deg,#0e0f12 0%,rgba(14,15,18,0) 40%)"></div>
+    </div>
+    <div style="position:relative;max-width:1400px;width:100%;margin:0 auto;padding:clamp(60px,10vh,120px) clamp(20px,4vw,56px) 60px;display:flex;flex-direction:column;justify-content:space-between;gap:70px;box-sizing:border-box">
+      <div style="display:flex;flex-direction:column;gap:36px;animation:rise 1.2s cubic-bezier(0.2,0.7,0.2,1) both">
+        <div style="display:flex;align-items:center;gap:14px;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a"><span style="width:40px;height:1px;background:#b89b6a;transform-origin:left;animation:lineGrow 1.2s 0.3s ease-out both"></span>Behavioral science · Applied AI</div>
+        <h1 style="margin:0;font:200 clamp(56px,8.4vw,136px)/0.96 Newsreader,serif;letter-spacing:-0.03em;text-wrap:balance;max-width:12ch">Desire isn’t random. <em style="font-style:italic;font-weight:200;color:#b89b6a">It can be modelled, and moved.</em></h1>
+        <p style="margin:0;font-size:15px;letter-spacing:0.01em;font-weight:300;color:rgba(236,230,218,0.6)">The non-conscious drivers of what people want</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:40px;align-items:end;animation:fade 1.4s 0.5s ease-out both">
+        <p style="margin:0;font-size:17px;line-height:1.6;font-weight:300;color:rgba(236,230,218,0.8);max-width:42ch;text-wrap:pretty">Companies have become extraordinarily good at measuring what people do, and remain surprisingly bad at understanding why. We measure the why: the non-conscious needs behind a choice, and how far a proposition moves them.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;justify-self:end">
+          <a href="#" onClick="{{ goContact }}" style="height:52px;padding:0 28px;background:#ece6da;color:#0e0f12;font-size:13.5px;font-weight:500;display:flex;align-items:center;gap:12px;transition:all 0.3s" style-hover="background:#b89b6a;color:#0e0f12">Begin a conversation <span style="font-size:16px">→</span></a>
+          <a href="#" onClick="{{ goWork }}" style="height:52px;padding:0 28px;border:1px solid rgba(236,230,218,0.3);font-size:13.5px;display:flex;align-items:center;transition:all 0.3s" style-hover="border-color:#ece6da;color:#ece6da">What we do</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Clients" style="border-top:1px solid rgba(236,230,218,0.1);border-bottom:1px solid rgba(236,230,218,0.1);overflow:hidden">
+    <div style="display:flex;width:max-content;animation:marquee 80s linear infinite">
+      <sc-for list="{{ clients }}" as="c" hint-placeholder-count="12">
+        <div style="height:92px;padding:0 clamp(28px,4vw,60px);display:flex;align-items:center;gap:clamp(28px,4vw,60px);white-space:nowrap">
+          <span style="font:300 clamp(22px,2vw,30px)/1 Newsreader,serif;letter-spacing:0.02em;color:rgba(236,230,218,0.7)">{{ c }}</span>
+          <span style="width:4px;height:4px;border-radius:50%;background:#b89b6a"></span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Lock and key" style="max-width:1400px;margin:0 auto;padding:clamp(90px,11vw,160px) clamp(20px,4vw,56px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(40px,6vw,100px);align-items:center">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">What we do</span>
+      <h2 style="margin:0;font:200 clamp(40px,5vw,76px)/1 Newsreader,serif;letter-spacing:-0.025em;text-wrap:balance">Most firms refine the key. <em style="color:#b89b6a">We study the lock.</em></h2>
+      <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(236,230,218,0.65);max-width:42ch;text-wrap:pretty">Billions go into fashioning the key: another claim, another price, another creative variant. We map the lock it is meant to open: the five levers the brain uses, below awareness, to decide what is worth wanting.</p>
+      <a href="#" onClick="{{ goWork }}" style="font-size:13px;letter-spacing:0.04em;color:#b89b6a;align-self:flex-start;border-bottom:1px solid rgba(184,155,106,0.5);padding-bottom:4px" style-hover="color:#ece6da;border-color:#ece6da">How HEART works →</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;border:1px solid rgba(236,230,218,0.12);padding:clamp(24px,3vw,40px)">
+      <span style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(236,230,218,0.5)">HEART · architecture of evaluation</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <sc-for list="{{ heartA }}" as="lv" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:minmax(72px,0.6fr) minmax(0,3fr) minmax(72px,0.7fr);gap:14px;align-items:center">
+            <span style="font-size:12.5px;letter-spacing:0.04em;text-align:right;line-height:1.2;color:{{ lv.fg }}">{{ lv.label }}</span>
+            <div style="display:flex;justify-content:center;min-width:0"><div style="width:{{ lv.w }};height:42px;background:{{ lv.bg }};clip-path:{{ lv.clip }}"></div></div>
+            <span style="font:300 italic 13px/1.25 Newsreader,serif;color:{{ lv.noteColor }}">{{ lv.note }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Signals" style="max-width:1400px;margin:0 auto;padding:clamp(90px,11vw,160px) clamp(20px,4vw,56px) 0;display:flex;flex-direction:column;gap:56px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">From the field</span>
+        <h2 style="margin:0;font:200 clamp(40px,5vw,76px)/1 Newsreader,serif;letter-spacing:-0.025em;text-wrap:balance">Dashboards show what people did. Rarely why.</h2>
+      </div>
+      <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(236,230,218,0.65);max-width:44ch;justify-self:end;text-wrap:pretty">Four findings from two decades of fieldwork for brands, campaigns and governments on four continents.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(236,230,218,0.1)">
+      <sc-for list="{{ bars }}" as="b" hint-placeholder-count="4">
+        <div style="background:#0e0f12;padding:40px 32px 44px;display:flex;flex-direction:column;justify-content:space-between;gap:40px;transition:background 0.4s" style-hover="background:#15171c">
+          <div style="display:flex;flex-direction:column;gap:12px"><span style="font:200 clamp(56px,5vw,80px)/0.9 Newsreader,serif;letter-spacing:-0.04em;color:#ece6da">{{ b.stat }}</span><span style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:#b89b6a">{{ b.label }}</span></div>
+          <p style="margin:0;font:300 20px/1.3 Newsreader,serif;color:rgba(236,230,218,0.8);text-wrap:pretty">{{ b.finding }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Featured insight" style="max-width:1400px;margin:0 auto;padding:clamp(90px,11vw,160px) clamp(20px,4vw,56px) 0">
+    <div style="border-top:1px solid rgba(236,230,218,0.15);padding-top:clamp(40px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">Insights · {{ feature.tag }}</span>
+        <h2 style="margin:0;font:200 clamp(40px,5vw,76px)/1 Newsreader,serif;letter-spacing:-0.025em;text-wrap:balance">{{ feature.title }}</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:24px;justify-self:end;max-width:46ch">
+        <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(236,230,218,0.65);text-wrap:pretty">{{ feature.body }}</p>
+        <a href="#" onClick="{{ goInsights }}" style="font-size:13px;letter-spacing:0.04em;color:#b89b6a;align-self:flex-start;border-bottom:1px solid rgba(184,155,106,0.5);padding-bottom:4px" style-hover="color:#ece6da;border-color:#ece6da">Read the essay →</a>
+      </div>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isWork }}" hint-placeholder-val="{{ false }}">
+<main style="flex:1">
+  <section id="work" data-screen-label="What we do" style="max-width:1400px;margin:0 auto;padding:clamp(70px,8vw,110px) clamp(20px,4vw,56px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(40px,6vw,100px);align-items:start">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">What we do</span>
+      <h2 style="margin:0;font:200 clamp(40px,5vw,76px)/1 Newsreader,serif;letter-spacing:-0.025em;text-wrap:balance">Most firms refine the key. <em style="color:#b89b6a">We study the lock.</em></h2>
+      <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(236,230,218,0.65);max-width:42ch;text-wrap:pretty">Billions go into fashioning the key: another claim, another price, another creative variant. We map the lock it is meant to open: the five levers the brain uses, below awareness, to decide what is worth wanting. We call the model HEART, Human Evaluation ARchitecture Theory. It is built on two decades of fieldwork, and it reads from the base up.</p>
+      <div style="display:flex;flex-direction:column;gap:2px;margin-top:24px;padding-top:28px;border-top:1px solid rgba(236,230,218,0.15)">
+        <span style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(236,230,218,0.5);margin-bottom:18px">HEART · architecture of evaluation</span>
+        <sc-for list="{{ heartA }}" as="lv" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:minmax(72px,0.6fr) minmax(0,3fr) minmax(72px,0.7fr);gap:14px;align-items:center">
+            <span style="font-size:12.5px;letter-spacing:0.04em;text-align:right;line-height:1.2;color:{{ lv.fg }}">{{ lv.label }}</span>
+            <div style="display:flex;justify-content:center;min-width:0"><div style="width:{{ lv.w }};height:42px;background:{{ lv.bg }};clip-path:{{ lv.clip }}"></div></div>
+            <span style="font:300 italic 13px/1.25 Newsreader,serif;color:{{ lv.noteColor }}">{{ lv.note }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;border-top:1px solid rgba(236,230,218,0.15)">
+      <sc-for list="{{ practices }}" as="p" hint-placeholder-count="5">
+        <li style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:20px;padding:32px 0;border-bottom:1px solid rgba(236,230,218,0.15);align-items:baseline;transition:padding 0.4s" style-hover="padding:32px 0 32px 12px">
+          <span style="font:300 14px Newsreader,serif;color:#b89b6a">{{ p.n }}</span>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <h3 style="margin:0;font:300 clamp(26px,2.6vw,36px)/1.1 Newsreader,serif;letter-spacing:-0.015em">{{ p.title }}</h3><span style="font:300 italic clamp(17px,1.5vw,20px)/1.3 Newsreader,serif;color:#b89b6a">{{ p.q }}</span>
+            <p style="margin:0;font-size:14.5px;line-height:1.65;font-weight:300;color:rgba(236,230,218,0.6);max-width:56ch;text-wrap:pretty">{{ p.body }}</p>
+            <p style="margin:4px 0 0;font-size:12.5px;line-height:1.5;color:rgba(236,230,218,0.45);display:flex;gap:10px;max-width:56ch"><span style="letter-spacing:0.12em;text-transform:uppercase;font-size:11px;color:#b89b6a;white-space:nowrap;padding-top:2px">Red flag</span><span>{{ p.flag }}</span></p>
+          </div>
+        </li>
+      </sc-for>
+    </ol>
+  </section>
+
+  <section data-screen-label="Engagements" style="max-width:1400px;margin:0 auto;padding:clamp(90px,11vw,160px) clamp(20px,4vw,56px) 0;display:flex;flex-direction:column;gap:48px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">Engagements</span>
+        <h2 style="margin:0;font:200 clamp(40px,5vw,76px)/1 Newsreader,serif;letter-spacing:-0.025em;text-wrap:balance">Four ways we work with you.</h2>
+      </div>
+      <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(236,230,218,0.65);max-width:44ch;justify-self:end;text-wrap:pretty">Every engagement starts at the base of the pyramid and reads upward. Social data, digital fieldwork and surveys, modelled together.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(236,230,218,0.1)">
+      <sc-for list="{{ engagements }}" as="e" hint-placeholder-count="4">
+        <div style="background:#0e0f12;padding:36px 30px 40px;display:flex;flex-direction:column;gap:30px;transition:background 0.4s" style-hover="background:#15171c">
+          <span style="font:300 14px Newsreader,serif;color:#b89b6a">{{ e.n }}</span>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <h3 style="margin:0;font:300 clamp(24px,2.2vw,30px)/1.15 Newsreader,serif;letter-spacing:-0.015em;text-wrap:balance">{{ e.title }}</h3>
+            <p style="margin:0;font-size:14px;line-height:1.65;font-weight:300;color:rgba(236,230,218,0.6);text-wrap:pretty">{{ e.body }}</p>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isSectors }}" hint-placeholder-val="{{ false }}">
+<main style="flex:1">
+  <section id="sectors" data-screen-label="Sectors" style="background:#ece6da;color:#0e0f12">
+    <div style="max-width:1400px;margin:0 auto;padding:clamp(90px,11vw,160px) clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:56px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:end">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#8a6f3f">Sectors</span>
+          <h2 style="margin:0;font:200 clamp(40px,5vw,76px)/1 Newsreader,serif;letter-spacing:-0.025em;text-wrap:balance">Where emotion decides the outcome.</h2>
+        </div>
+        <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(14,15,18,0.65);max-width:40ch;justify-self:end;text-wrap:pretty">Wherever a decision is made by a person, the same forces apply. Select a sector to see what we did there.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:rgba(14,15,18,0.15)">
+        <sc-for list="{{ sectors }}" as="s" hint-placeholder-count="6">
+          <div onMouseEnter="{{ s.enter }}" onMouseLeave="{{ s.leave }}" onClick="{{ s.click }}" tabIndex="0" role="button" style="cursor:pointer;background:{{ s.bg }};color:{{ s.fg }};padding:34px 28px 38px;display:flex;flex-direction:column;justify-content:space-between;gap:40px;min-height:300px;transition:background 0.4s,color 0.4s" style-hover="background:#0e0f12;color:#ece6da">
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:300 14px Newsreader,serif;font-style:italic;opacity:0.6">{{ s.n }}</span><span style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#b89b6a;opacity:{{ s.tagOp }}">What we did</span></div>
+            <sc-if value="{{ s.open }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <h3 style="margin:0;font:300 clamp(20px,1.7vw,24px)/1.2 Newsreader,serif;letter-spacing:-0.01em;color:#b89b6a;text-wrap:balance">{{ s.benefit }}</h3>
+                <p style="margin:0;font-size:13.5px;line-height:1.6;font-weight:300;opacity:0.85;text-wrap:pretty">{{ s.work }}</p>
+              </div>
+            </sc-if>
+            <sc-if value="{{ s.closed }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <h3 style="margin:0;font:300 clamp(26px,2.4vw,34px)/1.1 Newsreader,serif;letter-spacing:-0.015em">{{ s.name }}</h3>
+                <p style="margin:0;font-size:14px;line-height:1.6;font-weight:300;opacity:0.7;text-wrap:pretty">{{ s.note }}</p>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+</main>
+</sc-if>
+
+<sc-if value="{{ isInsights }}" hint-placeholder-val="{{ false }}">
+<main style="flex:1">
+  <section id="insights" data-screen-label="Insights" style="max-width:1400px;margin:0 auto;padding:clamp(70px,8vw,110px) clamp(20px,4vw,56px) 0;display:flex;flex-direction:column;gap:56px">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">Insights</span>
+        <h2 style="margin:0;font:200 clamp(40px,5vw,76px)/1 Newsreader,serif;letter-spacing:-0.025em">What we know</h2>
+      </div>
+      <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(236,230,218,0.65);max-width:40ch;text-wrap:pretty">Essays and field notes on the architecture of want.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,4vw,56px)">
+      <article style="grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,4vw,56px);align-items:end;padding-bottom:clamp(32px,4vw,56px);border-bottom:1px solid rgba(236,230,218,0.15)">
+        <div style="background:#15171c;padding:clamp(28px,3.5vw,48px);display:flex;flex-direction:column;gap:22px">
+          <span style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(236,230,218,0.5)">HEART applied to brands</span>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ heartB }}" as="lv" hint-placeholder-count="5">
+              <div style="display:grid;grid-template-columns:minmax(72px,0.6fr) minmax(0,3fr) minmax(72px,0.7fr);gap:14px;align-items:center">
+                <span style="font-size:12.5px;letter-spacing:0.04em;text-align:right;line-height:1.2;color:{{ lv.fg }}">{{ lv.label }}</span>
+                <div style="display:flex;justify-content:center;min-width:0"><div style="width:{{ lv.w }};height:42px;background:{{ lv.bg }};clip-path:{{ lv.clip }}"></div></div>
+                <span style="font:300 italic 13px/1.25 Newsreader,serif;color:{{ lv.noteColor }}">{{ lv.note }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <span style="font-size:12px;color:rgba(236,230,218,0.45)">Brands built from the top down earn niche popularity at best. Built from the base, they endure.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <span style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#b89b6a">{{ feature.n }} · {{ feature.tag }}</span>
+          <h3 style="margin:0;font:200 clamp(32px,3.6vw,54px)/1.05 Newsreader,serif;letter-spacing:-0.02em;text-wrap:balance">{{ feature.title }}</h3>
+          <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(236,230,218,0.65);max-width:52ch;text-wrap:pretty">{{ feature.body }}</p>
+          <a href="#" onClick="{{ goEssay }}" style="font-size:13px;letter-spacing:0.04em;color:#b89b6a;align-self:flex-start;border-bottom:1px solid rgba(184,155,106,0.5);padding-bottom:4px" style-hover="color:#ece6da;border-color:#ece6da">Read the essay →</a>
+        </div>
+      </article>
+      <sc-for list="{{ insights }}" as="it" hint-placeholder-count="3">
+        <article onClick="{{ goEssay }}" style="display:flex;flex-direction:column;gap:18px;padding-top:4px;cursor:pointer">
+          <span style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#b89b6a">{{ it.n }} · {{ it.tag }}</span>
+          <h3 style="margin:0;font:300 clamp(24px,2.2vw,30px)/1.15 Newsreader,serif;letter-spacing:-0.015em;text-wrap:balance">{{ it.title }}</h3>
+          <p style="margin:0;font-size:14px;line-height:1.65;font-weight:300;color:rgba(236,230,218,0.6);text-wrap:pretty">{{ it.body }}</p>
+          <span style="font-size:13px;letter-spacing:0.04em;color:#b89b6a">From the essay →</span>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Before launch" style="max-width:1400px;margin:0 auto;padding:clamp(90px,11vw,160px) clamp(20px,4vw,56px) 0;display:flex;flex-direction:column;gap:48px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">Putting HEART to work</span>
+        <h2 style="margin:0;font:200 clamp(40px,5vw,76px)/1 Newsreader,serif;letter-spacing:-0.025em;text-wrap:balance">Questions to ask before launch.</h2>
+      </div>
+      <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(236,230,218,0.65);max-width:44ch;justify-self:end;text-wrap:pretty">The first two matter most. Get them right and desire usually follows. Skip them and the campaign becomes a gamble.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(236,230,218,0.1)">
+      <sc-for list="{{ launchQs }}" as="q" hint-placeholder-count="4">
+        <div style="background:#0e0f12;padding:36px 30px 40px;display:flex;flex-direction:column;gap:26px;transition:background 0.4s" style-hover="background:#15171c">
+          <div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:#b89b6a">{{ q.lever }}</span><span style="font:300 italic 18px/1.3 Newsreader,serif;color:rgba(236,230,218,0.85)">{{ q.goal }}</span></div>
+          <p style="margin:0;font:300 22px/1.3 Newsreader,serif;color:#ece6da;text-wrap:pretty">{{ q.ask }}</p>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;line-height:1.5;color:rgba(236,230,218,0.55)">
+            <span style="display:grid;grid-template-columns:64px 1fr;gap:10px"><span style="letter-spacing:0.12em;text-transform:uppercase;font-size:11px;color:#b89b6a;padding-top:2px">Think</span><span>{{ q.think }}</span></span>
+            <span style="display:grid;grid-template-columns:64px 1fr;gap:10px"><span style="letter-spacing:0.12em;text-transform:uppercase;font-size:11px;color:#b89b6a;padding-top:2px">Red flag</span><span>{{ q.flag }}</span></span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+<main style="flex:1">
+  <section id="about" data-screen-label="About" style="max-width:1400px;margin:0 auto;padding:clamp(70px,8vw,110px) clamp(20px,4vw,56px) 0;display:flex;flex-direction:column;gap:clamp(56px,7vw,100px)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(40px,6vw,100px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">The firm</span>
+        <h2 style="margin:0;font:200 clamp(44px,6vw,96px)/0.96 Newsreader,serif;letter-spacing:-0.03em">Hearts,<br><em style="color:#b89b6a">then</em> minds.</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:40px">
+        <p style="margin:0;font:300 clamp(20px,1.9vw,26px)/1.4 Newsreader,serif;color:rgba(236,230,218,0.85);max-width:40ch;text-wrap:pretty">Led by Philippe Assouline, who has advised companies, governments and NGOs on behavioral communication, counter-disinformation and influence risk for more than two decades. One question has run through all of it: what makes people want something?</p>
+        <ol style="margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+          <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+            <li style="display:flex;flex-direction:column;gap:12px;padding-top:18px;border-top:1px solid rgba(236,230,218,0.25)">
+              <strong style="font:300 26px Newsreader,serif">{{ st.title }}</strong>
+              <span style="font-size:13.5px;line-height:1.6;font-weight:300;color:rgba(236,230,218,0.6)">{{ st.body }}</span>
+            </li>
+          </sc-for>
+        </ol>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:rgba(236,230,218,0.12)">
+      <sc-for list="{{ offices }}" as="o" hint-placeholder-count="3">
+        <div style="background:#0e0f12;padding:32px 28px 34px;display:flex;flex-direction:column;gap:40px;transition:background 0.4s" style-hover="background:#15171c">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+            <span style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:#b89b6a">{{ o.role }}</span>
+            <span style="font:300 15px Newsreader,serif;font-variant-numeric:tabular-nums;color:rgba(236,230,218,0.6)">{{ o.time }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font:200 clamp(36px,3.4vw,48px)/1 Newsreader,serif;letter-spacing:-0.02em">{{ o.city }}</span>
+            <span style="font-size:13.5px;line-height:1.6;font-weight:300;color:rgba(236,230,218,0.6)">{{ o.detail }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="How HEART differs" style="max-width:1400px;margin:0 auto;padding:clamp(90px,11vw,160px) clamp(20px,4vw,56px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(40px,6vw,100px);align-items:start">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">How HEART is different</span>
+      <h2 style="margin:0;font:200 clamp(40px,5vw,76px)/1 Newsreader,serif;letter-spacing:-0.025em;text-wrap:balance">Three claims older models don’t make.</h2>
+      <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(236,230,218,0.65);max-width:42ch;text-wrap:pretty">Maslow’s hierarchy of needs (1943), Bain’s Elements of Value (2016) and Motista’s emotional motivators (2015) all argue that deeper needs drive choice. HEART goes further.</p>
+    </div>
+    <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;border-top:1px solid rgba(236,230,218,0.15)">
+      <sc-for list="{{ claims }}" as="c" hint-placeholder-count="3">
+        <li style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:20px;padding:30px 0;border-bottom:1px solid rgba(236,230,218,0.15);align-items:baseline">
+          <span style="font:300 14px Newsreader,serif;color:#b89b6a">{{ c.n }}</span>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <h3 style="margin:0;font:300 clamp(24px,2.4vw,32px)/1.15 Newsreader,serif;letter-spacing:-0.015em;text-wrap:balance">{{ c.title }}</h3>
+            <p style="margin:0;font-size:14.5px;line-height:1.65;font-weight:300;color:rgba(236,230,218,0.6);max-width:52ch;text-wrap:pretty">{{ c.body }}</p>
+          </div>
+        </li>
+      </sc-for>
+    </ol>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+<main style="flex:1">
+  <section data-screen-label="Contact form" style="max-width:1400px;margin:0 auto;padding:clamp(70px,8vw,110px) clamp(20px,4vw,56px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(40px,6vw,100px);align-items:start">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">Contact</span>
+      <h2 style="margin:0;font:200 clamp(40px,5vw,76px)/1 Newsreader,serif;letter-spacing:-0.025em;text-wrap:balance">Tell us what you need people to <em style="color:#b89b6a">want.</em></h2>
+      <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(236,230,218,0.65);max-width:42ch;text-wrap:pretty">A short note is enough. We reply within two working days from New York, Tel Aviv or Tokyo.</p>
+    </div>
+    <form onSubmit="{{ submitContact }}" style="display:flex;flex-direction:column;gap:30px">
+      <label style="display:flex;flex-direction:column;gap:10px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(236,230,218,0.55)">Name<input type="text" style="height:50px;padding:0;border:0;border-bottom:1px solid rgba(236,230,218,0.3);border-radius:0;background:transparent;font-size:16px;font-weight:300;color:#ece6da;outline:none" style-focus="border-color:#b89b6a"></label>
+      <label style="display:flex;flex-direction:column;gap:10px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(236,230,218,0.55)">Work email<input type="email" placeholder="name@company.com" style="height:50px;padding:0;border:0;border-bottom:1px solid rgba(236,230,218,0.3);border-radius:0;background:transparent;font-size:16px;font-weight:300;color:#ece6da;outline:none" style-focus="border-color:#b89b6a"></label>
+      <label style="display:flex;flex-direction:column;gap:10px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(236,230,218,0.55)">Organisation<input type="text" style="height:50px;padding:0;border:0;border-bottom:1px solid rgba(236,230,218,0.3);border-radius:0;background:transparent;font-size:16px;font-weight:300;color:#ece6da;outline:none" style-focus="border-color:#b89b6a"></label>
+      <label style="display:flex;flex-direction:column;gap:10px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(236,230,218,0.55)">What’s on your mind<textarea rows="4" style="padding:12px 0;border:0;border-bottom:1px solid rgba(236,230,218,0.3);border-radius:0;background:transparent;font-size:16px;font-weight:300;color:#ece6da;outline:none;resize:vertical;font-family:inherit" style-focus="border-color:#b89b6a"></textarea></label>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px">
+        <button type="submit" style="height:52px;padding:0 32px;border:0;background:#ece6da;color:#0e0f12;font-size:13.5px;font-weight:500;cursor:pointer;transition:background 0.3s" style-hover="background:#b89b6a">Send</button>
+        <sc-if value="{{ contactSent }}" hint-placeholder-val="{{ false }}"><span style="font:300 italic 17px Newsreader,serif;color:#b89b6a">Thank you. We will be in touch shortly.</span></sc-if>
+      </div>
+    </form>
+  </section>
+  <section data-screen-label="Offices" style="max-width:1400px;margin:0 auto;padding:clamp(90px,11vw,160px) clamp(20px,4vw,56px) 0">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:rgba(236,230,218,0.12)">
+      <sc-for list="{{ offices }}" as="o" hint-placeholder-count="3">
+        <div style="background:#0e0f12;padding:32px 28px 34px;display:flex;flex-direction:column;gap:40px;transition:background 0.4s" style-hover="background:#15171c">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+            <span style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:#b89b6a">{{ o.role }}</span>
+            <span style="font:300 15px Newsreader,serif;font-variant-numeric:tabular-nums;color:rgba(236,230,218,0.6)">{{ o.time }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <span style="font:200 clamp(36px,3.4vw,48px)/1 Newsreader,serif;letter-spacing:-0.02em">{{ o.city }}</span>
+            <span style="font-size:13.5px;line-height:1.6;font-weight:300;color:rgba(236,230,218,0.6)">{{ o.detail }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isEssay }}" hint-placeholder-val="{{ false }}">
+<main style="flex:1">
+  <article data-screen-label="Essay" style="max-width:1400px;margin:0 auto;padding:clamp(70px,8vw,110px) clamp(20px,4vw,56px) 0;display:flex;flex-direction:column;gap:clamp(48px,6vw,80px)">
+    <header style="display:flex;flex-direction:column;gap:26px;max-width:900px">
+      <a href="#" onClick="{{ goInsights }}" style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a" style-hover="color:#ece6da">← Insights · Essay</a>
+      <h1 style="margin:0;font:200 clamp(48px,7vw,112px)/0.96 Newsreader,serif;letter-spacing:-0.03em;text-wrap:balance">The Architecture of Want</h1>
+      <p style="margin:0;font:300 clamp(20px,2vw,28px)/1.35 Newsreader,serif;color:rgba(236,230,218,0.8);text-wrap:pretty">Companies and campaigns have become extraordinarily good at measuring what people do. They remain surprisingly bad at understanding why they do it. Here’s the key.</p>
+      <span style="font-size:13px;letter-spacing:0.04em;color:rgba(236,230,218,0.55)">By Philippe Assouline</span>
+    </header>
+    <div style="display:flex;flex-direction:column;gap:22px;max-width:70ch;border-top:1px solid rgba(236,230,218,0.15);padding-top:clamp(40px,5vw,64px)">
+      <sc-for list="{{ essayBlocks }}" as="b" hint-placeholder-count="8">
+        <sc-if value="{{ b.isH }}" hint-placeholder-val="{{ false }}"><h2 style="margin:28px 0 0;font:300 clamp(24px,2.4vw,32px)/1.15 Newsreader,serif;letter-spacing:-0.015em;text-wrap:balance">{{ b.t }}</h2></sc-if>
+        <sc-if value="{{ b.isLever }}" hint-placeholder-val="{{ false }}"><h2 style="margin:40px 0 4px;padding-top:28px;border-top:1px solid rgba(184,155,106,0.4);font:300 italic clamp(26px,2.8vw,38px)/1.15 Newsreader,serif;letter-spacing:-0.015em;color:#b89b6a;text-wrap:balance">{{ b.t }}</h2></sc-if>
+        <sc-if value="{{ b.isP }}" hint-placeholder-val="{{ true }}"><p style="margin:0;font-size:16.5px;line-height:1.75;font-weight:300;color:rgba(236,230,218,0.8);text-wrap:pretty">{{ b.t }}</p></sc-if>
+        <sc-if value="{{ b.isPull }}" hint-placeholder-val="{{ false }}"><p style="margin:18px 0;font:200 clamp(26px,2.8vw,38px)/1.2 Newsreader,serif;letter-spacing:-0.015em;color:#ece6da;text-wrap:balance">{{ b.t }}</p></sc-if>
+        <sc-if value="{{ b.isBio }}" hint-placeholder-val="{{ false }}"><p style="margin:30px 0 0;padding-top:24px;border-top:1px solid rgba(236,230,218,0.15);font-size:14px;line-height:1.6;color:rgba(236,230,218,0.55)">{{ b.t }}</p></sc-if>
+        <sc-if value="{{ b.isImgA }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:24px 0;display:flex;flex-direction:column;gap:20px;border:1px solid rgba(236,230,218,0.12);padding:clamp(24px,3vw,40px)">
+            <span style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(236,230,218,0.5)">HEART · architecture of evaluation</span>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <sc-for list="{{ heartA }}" as="lv" hint-placeholder-count="5">
+                <div style="display:grid;grid-template-columns:minmax(72px,0.6fr) minmax(0,3fr) minmax(72px,0.7fr);gap:14px;align-items:center">
+                  <span style="font-size:12.5px;letter-spacing:0.04em;text-align:right;line-height:1.2;color:{{ lv.fg }}">{{ lv.label }}</span>
+                  <div style="display:flex;justify-content:center;min-width:0"><div style="width:{{ lv.w }};height:42px;background:{{ lv.bg }};clip-path:{{ lv.clip }}"></div></div>
+                  <span style="font:300 italic 13px/1.25 Newsreader,serif;color:{{ lv.noteColor }}">{{ lv.note }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ b.isImgB }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:24px 0;display:flex;flex-direction:column;gap:20px;border:1px solid rgba(236,230,218,0.12);padding:clamp(24px,3vw,40px)">
+            <span style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(236,230,218,0.5)">HEART applied to brands</span>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <sc-for list="{{ heartB }}" as="lv" hint-placeholder-count="5">
+                <div style="display:grid;grid-template-columns:minmax(72px,0.6fr) minmax(0,3fr) minmax(72px,0.7fr);gap:14px;align-items:center">
+                  <span style="font-size:12.5px;letter-spacing:0.04em;text-align:right;line-height:1.2;color:{{ lv.fg }}">{{ lv.label }}</span>
+                  <div style="display:flex;justify-content:center;min-width:0"><div style="width:{{ lv.w }};height:42px;background:{{ lv.bg }};clip-path:{{ lv.clip }}"></div></div>
+                  <span style="font:300 italic 13px/1.25 Newsreader,serif;color:{{ lv.noteColor }}">{{ lv.note }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </sc-for>
+    </div>
+  </article>
+</main>
+</sc-if>
+
+<sc-if value="{{ isLegal }}" hint-placeholder-val="{{ false }}">
+<main style="flex:1">
+  <section data-screen-label="Legal" style="max-width:1400px;margin:0 auto;padding:clamp(70px,8vw,110px) clamp(20px,4vw,56px) 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(40px,6vw,100px);align-items:start">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span style="font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">Legal</span>
+      <h2 style="margin:0;font:200 clamp(40px,5vw,76px)/1 Newsreader,serif;letter-spacing:-0.025em">Privacy &amp; terms</h2>
+      <p style="margin:0;font-size:15px;line-height:1.7;font-weight:300;color:rgba(236,230,218,0.65);max-width:42ch">Last updated November 2026. Questions to <a href="mailto:info@propelloriq.com" style="color:#b89b6a">info@propelloriq.com</a>.</p>
+    </div>
+    <ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;border-top:1px solid rgba(236,230,218,0.15)">
+      <sc-for list="{{ legal }}" as="l" hint-placeholder-count="4">
+        <li style="display:flex;flex-direction:column;gap:10px;padding:30px 0;border-bottom:1px solid rgba(236,230,218,0.15)">
+          <h3 style="margin:0;font:300 clamp(22px,2.2vw,28px)/1.15 Newsreader,serif;letter-spacing:-0.015em">{{ l.title }}</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.65;font-weight:300;color:rgba(236,230,218,0.6);max-width:60ch;text-wrap:pretty">{{ l.body }}</p>
+        </li>
+      </sc-for>
+    </ol>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isSite }}" hint-placeholder-val="{{ true }}">
+  <section id="contact" data-screen-label="Contact" style="margin-top:clamp(90px,11vw,160px);border-top:1px solid rgba(236,230,218,0.12)">
+    <div style="max-width:1400px;margin:0 auto;padding:clamp(80px,10vw,140px) clamp(20px,4vw,56px) 40px;display:flex;flex-direction:column;gap:90px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px;align-items:end">
+        <h2 style="margin:0;font:200 clamp(56px,9vw,150px)/0.92 Newsreader,serif;letter-spacing:-0.035em">Begin a <em style="color:#b89b6a">conversation.</em></h2>
+        <div style="display:flex;flex-direction:column;gap:18px;font:300 clamp(22px,2.2vw,30px)/1.1 Newsreader,serif">
+          <a href="mailto:info@propelloriq.com" style="align-self:flex-start;border-bottom:1px solid rgba(236,230,218,0.3);padding-bottom:4px;white-space:nowrap;font-size:clamp(18px,2.2vw,30px)" style-hover="color:#b89b6a;border-color:#b89b6a">info@propelloriq.com</a>
+          <a href="tel:+16467657465" style="align-self:flex-start;border-bottom:1px solid rgba(236,230,218,0.3);padding-bottom:4px;white-space:nowrap;font-size:clamp(18px,2.2vw,30px)" style-hover="color:#b89b6a;border-color:#b89b6a">+1 (646) 765-7465</a>
+          <span style="font:300 13.5px/1.6 'Hanken Grotesk',sans-serif;color:rgba(236,230,218,0.55);margin-top:6px">25 Kent Avenue, Brooklyn, New York · Tel Aviv · Tokyo</span>
+        </div>
+      </div>
+      <footer style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:12.5px;color:rgba(236,230,218,0.5);border-top:1px solid rgba(236,230,218,0.12);padding-top:22px">
+        <span>© 2026 PropellorIQ. All rights reserved.</span>
+        <div style="display:flex;gap:28px"><a href="https://www.linkedin.com/company/propelloriq" target="_blank" rel="noopener" style="color:inherit">LinkedIn</a><a href="#" onClick="{{ goLegal }}" style="color:inherit">Privacy</a><a href="#" onClick="{{ goLegal }}" style="color:inherit">Terms</a></div>
+      </footer>
+    </div>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Client login" style="flex:1;display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));min-height:calc(100vh - 76px)">
+  <div style="position:relative;overflow:hidden;min-height:380px;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(40px,6vw,90px);gap:60px">
+    <div style="position:absolute;inset:0"><div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 70%,rgba(184,155,106,0.25),rgba(14,15,18,0) 70%),#15171c"></div><svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%"><ellipse cx="400" cy="700" rx="81" ry="60" fill="none" stroke="#b89b6a" stroke-opacity="0.52" stroke-width="0.8"></ellipse><ellipse cx="400" cy="700" rx="162" ry="120" fill="none" stroke="#b89b6a" stroke-opacity="0.48" stroke-width="0.8"></ellipse><ellipse cx="400" cy="700" rx="243.00000000000003" ry="180" fill="none" stroke="#b89b6a" stroke-opacity="0.45" stroke-width="0.8"></ellipse><ellipse cx="400" cy="700" rx="324" ry="240" fill="none" stroke="#b89b6a" stroke-opacity="0.41" stroke-width="0.8"></ellipse><ellipse cx="400" cy="700" rx="405" ry="300" fill="none" stroke="#b89b6a" stroke-opacity="0.38" stroke-width="0.8"></ellipse><ellipse cx="400" cy="700" rx="486.00000000000006" ry="360" fill="none" stroke="#b89b6a" stroke-opacity="0.34" stroke-width="0.8"></ellipse><ellipse cx="400" cy="700" rx="567" ry="420" fill="none" stroke="#b89b6a" stroke-opacity="0.31" stroke-width="0.8"></ellipse><ellipse cx="400" cy="700" rx="648" ry="480" fill="none" stroke="#b89b6a" stroke-opacity="0.27" stroke-width="0.8"></ellipse><ellipse cx="400" cy="700" rx="729" ry="540" fill="none" stroke="#b89b6a" stroke-opacity="0.23" stroke-width="0.8"></ellipse><ellipse cx="400" cy="700" rx="810" ry="600" fill="none" stroke="#b89b6a" stroke-opacity="0.20" stroke-width="0.8"></ellipse><ellipse cx="400" cy="700" rx="891.0000000000001" ry="660" fill="none" stroke="#b89b6a" stroke-opacity="0.17" stroke-width="0.8"></ellipse><ellipse cx="400" cy="700" rx="972.0000000000001" ry="720" fill="none" stroke="#b89b6a" stroke-opacity="0.13" stroke-width="0.8"></ellipse></svg><div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,15,18,0.5),rgba(14,15,18,0.9))"></div></div>
+    <span style="position:relative;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:#b89b6a">Client portal</span>
+    <p style="position:relative;margin:0;font:200 clamp(40px,4.4vw,68px)/1 Newsreader,serif;letter-spacing:-0.025em;max-width:14ch;text-wrap:balance">Your engagement, fieldwork and findings in one place.</p>
+  </div>
+  <form onSubmit="{{ submitLogin }}" style="display:flex;flex-direction:column;justify-content:center;gap:34px;padding:80px clamp(28px,6vw,110px);background:#0e0f12;animation:rise 0.8s ease-out both">
+    <h1 style="margin:0;font:200 clamp(40px,4vw,56px)/1 Newsreader,serif;letter-spacing:-0.025em">Welcome back.</h1>
+    <label style="display:flex;flex-direction:column;gap:10px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(236,230,218,0.55)">Work email
+      <input type="email" value="{{ email }}" onChange="{{ setEmail }}" placeholder="name@company.com" style="height:50px;padding:0;border:0;border-bottom:1px solid rgba(236,230,218,0.3);border-radius:0;background:transparent;font-size:16px;font-weight:300;color:#ece6da;outline:none" style-focus="border-color:#b89b6a">
+    </label>
+    <label style="display:flex;flex-direction:column;gap:10px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(236,230,218,0.55)">Password
+      <input type="password" placeholder="••••••••••" style="height:50px;padding:0;border:0;border-bottom:1px solid rgba(236,230,218,0.3);border-radius:0;background:transparent;font-size:16px;font-weight:300;color:#ece6da;outline:none" style-focus="border-color:#b89b6a">
+    </label>
+    <button type="submit" style="height:52px;border:0;background:#ece6da;color:#0e0f12;font-size:13.5px;font-weight:500;cursor:pointer;transition:background 0.3s" style-hover="background:#b89b6a">Sign in</button>
+    <div style="display:flex;justify-content:space-between;font-size:13px;color:rgba(236,230,218,0.55)">
+      <a href="mailto:info@propelloriq.com?subject=Password%20reset" style="color:inherit">Forgot password</a>
+      <a href="#" onClick="{{ goHome }}" style="color:inherit">← Back to site</a>
+    </div>
+  </form>
+</main>
+</sc-if>
+
+<sc-if value="{{ isPortal }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Client portal" style="flex:1;display:grid;grid-template-columns:240px minmax(0,1fr)">
+  <aside style="border-right:1px solid rgba(236,230,218,0.12);padding:28px 16px;display:flex;flex-direction:column;gap:2px;position:sticky;top:76px;align-self:start;height:calc(100vh - 76px)">
+    <sc-for list="{{ portalNav }}" as="t" hint-placeholder-count="5">
+      <button onClick="{{ t.select }}" style="text-align:left;height:42px;padding:0 14px;border:0;border-left:1px solid {{ t.bar }};background:transparent;color:{{ t.color }};font-size:13.5px;cursor:pointer;white-space:nowrap;transition:color 0.3s" style-hover="color:#ece6da">{{ t.name }}</button>
+    </sc-for>
+    <div style="margin-top:auto;padding:18px 14px 0;border-top:1px solid rgba(236,230,218,0.12);display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:rgba(236,230,218,0.55)">
+      <span style="color:#ece6da">Engagement lead</span><span>Partner, Behavioral Practice</span><a href="mailto:info@propelloriq.com" style="color:#b89b6a;margin-top:4px">Message →</a>
+    </div>
+  </aside>
+  <div style="padding:48px clamp(20px,4vw,56px) 90px;display:flex;flex-direction:column;gap:36px;max-width:1140px">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;border-bottom:1px solid rgba(236,230,218,0.12);padding-bottom:24px">
+      <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+        <span style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#b89b6a">{{ clientName }}</span>
+        <h1 style="margin:0;font:200 clamp(40px,4vw,56px)/1 Newsreader,serif;letter-spacing:-0.025em">{{ portalTitle }}</h1>
+      </div>
+      <span style="font-size:13px;color:rgba(236,230,218,0.55)">Brand emotional strategy · Week 7 of 12</span>
+    </div>
+
+    <sc-if value="{{ portalOverview }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:rgba(236,230,218,0.12)">
+      <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+        <div style="background:#0e0f12;padding:24px 22px 26px;display:flex;flex-direction:column;gap:18px">
+          <span style="font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(236,230,218,0.55)">{{ k.label }}</span>
+          <span style="font:200 clamp(44px,4vw,60px)/0.9 Newsreader,serif;letter-spacing:-0.03em">{{ k.value }}</span>
+          <span style="font-size:12.5px;color:#b89b6a">{{ k.delta }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1px;background:rgba(236,230,218,0.12)">
+      <div style="background:#ece6da;color:#0e0f12;padding:30px;min-height:320px;display:flex;flex-direction:column;justify-content:space-between;gap:30px">
+        <div style="display:flex;justify-content:space-between;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:#8a6f3f"><span>Gen Z segment</span><span>Wave 3 · n = 2,400</span></div>
+        <span style="font:200 clamp(32px,3.2vw,46px)/1.05 Newsreader,serif;letter-spacing:-0.02em;text-wrap:balance">Belonging now outweighs price in the 18–26 cohort. Self shift: +11.</span>
+      </div>
+      <div style="background:#0e0f12;padding:30px;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="margin:0;font:300 28px Newsreader,serif">Deliverables</h2><a href="#" onClick="{{ goReports }}" style="font-size:12.5px;color:#b89b6a">View all</a></div>
+        <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
+          <sc-for list="{{ deliverables }}" as="d" hint-placeholder-count="4">
+            <li style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:14px 0;border-top:1px solid rgba(236,230,218,0.12);align-items:center">
+              <div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14px">{{ d.name }}</span><span style="font-size:12.5px;color:rgba(236,230,218,0.5)">{{ d.date }}</span></div>
+              <span style="font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;padding:5px 10px;border:1px solid {{ d.border }};color:{{ d.fg }}">{{ d.status }}</span>
+            </li>
+          </sc-for>
+        </ul>
+      </div>
+    </div>
+    <div style="border:1px solid rgba(236,230,218,0.12);padding:26px 30px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(236,230,218,0.55)">Next session</span><span style="font:300 26px Newsreader,serif">Wave 3 readout with the engagement team</span><span style="font-size:13px;color:rgba(236,230,218,0.55)">Thursday · 16:00 CET · New York, Tel Aviv, Tokyo</span></div>
+      <button style="height:44px;padding:0 22px;border:0;background:#ece6da;color:#0e0f12;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background 0.3s" style-hover="background:#b89b6a">Join briefing</button>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ portalList }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-direction:column;border-top:1px solid rgba(236,230,218,0.12)">
+      <sc-for list="{{ portalRows }}" as="r" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:24px;align-items:center;padding:20px 0;border-bottom:1px solid rgba(236,230,218,0.12);transition:padding 0.3s" style-hover="padding:20px 10px">
+          <div style="display:flex;flex-direction:column;gap:4px"><span style="font:300 22px Newsreader,serif">{{ r.name }}</span><span style="font-size:12.5px;color:rgba(236,230,218,0.5)">{{ r.meta }}</span></div>
+          <span style="font-size:12.5px;color:rgba(236,230,218,0.55)">{{ r.date }}</span>
+          <a href="#" onClick="{{ goReports }}" style="font-size:12.5px;color:#b89b6a">Open →</a>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+  </div>
+</main>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startView&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;work&quot;,&quot;sectors&quot;,&quot;insights&quot;,&quot;about&quot;,&quot;contact&quot;,&quot;login&quot;,&quot;portal&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;}}">
+class Component extends DCLogic {
+  state = { view: 'home', email: '', tab: 'Overview', now: Date.now(), contactSent: false, hoverSector: null, pinSector: null, essay: [] };
+  componentDidMount() {
+    import(new URL('./essay.js', document.baseURI).href).then(m => this.setState({ essay: m.essay })).catch(() => {});
+    const v = this.props.startView; if (v && v !== this.state.view) this.setState({ view: v });
+    this.t = setInterval(() => this.setState({ now: Date.now() }), 1000);
+  }
+  componentWillUnmount() { clearInterval(this.t); }
+  go(view) { return e => { if (e && e.preventDefault) e.preventDefault(); this.setState({ view }); window.scrollTo(0, 0); }; }
+  renderVals() {
+    const { view, tab, now } = this.state;
+    const clock = tz => new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: tz }).format(new Date(now));
+    const tabs = ['Overview', 'Engagements', 'Reports', 'Data room', 'Sessions'];
+    const rows = {
+      Engagements: [{ name: 'Brand emotional strategy', meta: 'Active · 12 weeks', date: 'Started Sep 2026' }, { name: 'Gen Z segmentation study', meta: 'Completed', date: 'Jun 2026' }, { name: 'Crisis communication playbook', meta: 'Completed', date: 'Feb 2026' }],
+      Reports: [{ name: 'Wave 2 emotional drivers', meta: 'PDF · 48 pages', date: 'Oct 21' }, { name: 'Message testing: 6 variants', meta: 'Interactive', date: 'Oct 9' }, { name: 'Segment architecture v2', meta: 'PDF · 31 pages', date: 'Sep 27' }, { name: 'Kickoff hypotheses', meta: 'PDF · 12 pages', date: 'Sep 4' }],
+      'Data room': [{ name: 'Survey microdata · waves 1–2', meta: 'CSV · anonymised', date: 'Oct 21' }, { name: 'Social listening corpus', meta: '1.2M posts', date: 'Oct 14' }, { name: 'Model cards', meta: 'Methodology', date: 'Sep 30' }],
+      Sessions: [{ name: 'Wave 3 readout', meta: 'Engagement team', date: 'Thu 16:00 CET' }, { name: 'Creative review', meta: 'With agency', date: 'Nov 12' }, { name: 'Steering committee', meta: 'Quarterly', date: 'Dec 3' }]
+    };
+    const pyramid = (labels, notes, colors) => labels.map((label, i) => { const x = 50 / (i + 1); const op = [0.14, 0.3, 0.5, 0.75, 1][i]; return { label, note: notes[i], noteColor: colors[i] || 'transparent', w: ((i + 1) * 20) + '%', bg: `rgba(184,155,106,${op})`, clip: `polygon(${x}% 0, ${100 - x}% 0, 100% 100%, 0 100%)`, fg: i === 4 ? '#b89b6a' : 'rgba(236,230,218,0.8)' }; });
+    const sectorList = [
+        { n: 'i', name: 'Consumer & retail', note: 'Emotional branding for Gen Y and Gen Z audiences.', work: 'For a global beauty leader we found that American millennials treated certain beauty practices as morally, and therefore socially, dangerous to adopt. The product line and its positioning were realigned with their values before launch. For a beer brand we modelled 60,000 posts and found its strongest content paired the product with food: buyers used it to signal discernment, not thirst.', benefit: 'We find the hidden rule your customers live by, then fit the brand to it.' },
+        { n: 'ii', name: 'Pharma & healthcare', note: 'Trust, adherence and perception in regulated markets.', work: 'Patients and physicians decide the way everyone else does: on anxiety, confidence and sense of control first, evidence second. We map those states for each audience, test which messages shift them, and give compliance-safe communication a reason to be heard.', benefit: 'Trust is formed below the evidence. We measure where, and move it.' },
+        { n: 'iii', name: 'Mobility & automotive', note: 'Brand strategy, including our Japan partnership since 2018.', work: 'For Japanese multinationals we analysed tens of thousands of consumer posts before, during and after the first COVID shock. Salads gave way to desserts, stark contrasts to warm oranges and reds. The products stayed the same; the cravings changed. Creative, colour and tone were retuned within weeks.', benefit: 'When the market’s needs shift, we see it before the sales numbers do.' },
+        { n: 'iv', name: 'Technology', note: 'B2B demand, positioning and category narratives.', work: 'For an online trading platform we modelled 19,963 posts for reach and sharing. Content that addressed uncertainty and the fear of looking stupid consistently beat content about winning. The content strategy was rebuilt around reassurance and competence.', benefit: 'Five to ten times the earned-media efficiency of paid influencers, at a fraction of the acquisition cost.' },
+        { n: 'v', name: 'Public affairs & campaigns', note: 'Elections and issue campaigns across the USA, Europe and Israel.', work: 'Across a dozen large-scale surveys on four continents, political attitudes were predicted most strongly by mental-health states and social assessments, not by demographics or party. We build message architecture on those predictors and counter disinformation that exploits them.', benefit: 'Campaigns built on what actually predicts the vote, not on who people say they are.' },
+        { n: 'vi', name: 'Financial services', note: 'Confidence, loyalty and crisis communication.', work: 'In reputation crises we look beneath the complaints for the psychological injury. For one carrier it was dignity: customers felt treated like numbers and would accept discomfort, even higher prices, if they felt seen. The recovery plan addressed the injury rather than the operations line.', benefit: 'Loyalty recovers when customers feel seen. We find what made them feel unseen.' }
+    ];
+    const activeSector = this.state.hoverSector ?? this.state.pinSector;
+    const sel = activeSector != null ? sectorList[activeSector] : null;
+    const site = ['home', 'work', 'sectors', 'insights', 'about', 'contact', 'essay', 'legal'].includes(view);
+    const navItems = [['What we do', 'work'], ['Sectors', 'sectors'], ['Insights', 'insights'], ['About', 'about'], ['Contact', 'contact']].map(([name, v]) => ({ name, go: this.go(v), color: view === v ? '#ece6da' : 'rgba(236,230,218,0.75)', line: view === v ? '#b89b6a' : 'transparent' }));
+    const clientList = ['Toyota', 'Shiseido', 'Dentsu', 'TAG Heuer', 'Honda', 'Sapporo', 'Mitsubishi', 'Universal', 'KEPCO', 'Government of Japan', 'ThriveDX'];
+    const allInsights = [
+      { n: 'I', tag: 'Essay · Philippe Assouline', title: 'The Architecture of Want', body: 'Companies and campaigns have become extraordinarily good at measuring what people do. They remain surprisingly bad at understanding why they do it. Here’s the key.' },
+      { n: 'II', tag: 'Case · Japan', title: 'The products stayed the same. The cravings changed.', body: 'Tens of thousands of posts before, during and after the first COVID shock. Salads gave way to desserts, stark contrasts to warm oranges and reds. Needs changed; wants followed.' },
+      { n: 'III', tag: 'Case · Airline', title: 'Feeling seen beats a better flight.', body: 'Beneath the complaints about delays was one consistent injury: passengers felt treated like numbers. Many would accept discomfort, even higher prices, if their dignity was restored.' },
+      { n: 'IV', tag: 'Field note', title: 'Why values-led campaigns misfire.', body: 'Bud Light, Jaguar, Tesla: each read as a values statement that said nothing about who customers were or where they belonged. Values hold only when self and belonging are secured first.' }
+    ];
+    return {
+      isHome: view === 'home', isWork: view === 'work', isSectors: view === 'sectors', isInsights: view === 'insights', isAbout: view === 'about', isContact: view === 'contact', isSite: site,
+      isLogin: view === 'login', isPortal: view === 'portal', notPortal: view !== 'portal', navItems, isEssay: view === 'essay', isLegal: view === 'legal',
+      goEssay: this.go('essay'), goLegal: this.go('legal'), goReports: e => { e.preventDefault(); this.setState({ tab: 'Reports' }); },
+      essayBlocks: this.state.essay.map(b => ({ t: b.t, isH: b.k === 'h', isLever: b.k === 'lever', isP: b.k === 'p', isPull: b.k === 'pull', isBio: b.k === 'bio', isImgA: b.k === 'imgA', isImgB: b.k === 'imgB' })),
+      legal: [
+        { title: 'What we collect', body: 'Contact details you send us through this site or by email, and standard server logs. We do not run advertising trackers.' },
+        { title: 'How we use it', body: 'To reply to you, to run client engagements, and to keep the client portal secure. We never sell personal data.' },
+        { title: 'Research data', body: 'Fieldwork and survey data are anonymised before analysis and held under the terms agreed in each engagement.' },
+        { title: 'Terms of use', body: 'Content on this site, including the HEART model and essays, is © PropellorIQ and Philippe Assouline. Quote with attribution; reproduction requires written permission.' }
+      ],
+      goHome: this.go('home'), goLogin: this.go('login'), goWork: this.go('work'), goInsights: this.go('insights'), goContact: this.go('contact'),
+      contactSent: this.state.contactSent, submitContact: e => { e.preventDefault(); this.setState({ contactSent: true }); },
+      engagements: [
+        { n: '01', title: 'Want mapping', body: 'Measure the non-conscious needs of an audience across the five levers, and the delta your proposition creates. Social data, digital fieldwork and surveys, modelled together.' },
+        { n: '02', title: 'Pre-launch HEART audit', body: 'Before a campaign or product goes live: what will it make customers feel about themselves, which tribe does it let them join, and which might it expel them from.' },
+        { n: '03', title: 'Reputation & crisis', body: 'Find the psychological injury beneath the complaints. For one airline it was dignity, not delays: being seen mattered more than operations spend.' },
+        { n: '04', title: 'Counter-disinformation & influence risk', body: 'The architecture that builds brands also powers manipulation. We help companies, governments and NGOs recognise and counter it.' }
+      ],
+      launchQs: [
+        { lever: 'Self', goal: 'Make them feel stronger.', ask: 'What will this make our customers feel about themselves, and how big is the shift?', think: 'Nike, “Just Do It.”', flag: 'We can describe the benefit but not the feeling.' },
+        { lever: 'Belonging', goal: 'Make them feel they belong, and able to show it.', ask: 'Which group does this let them join, and which might it expel them from?', think: 'Apple, “Hello, I’m a Mac.”', flag: 'The campaign changes who “people like us” are.' },
+        { lever: 'Values', goal: 'Make them feel righteous.', ask: 'Does this fit the rules our customers already live by, or ask them to adopt new ones?', think: 'Prius.', flag: 'We lead with our values before securing self and belonging.' },
+        { lever: 'Logic and facts', goal: 'Make it easy to justify.', ask: 'Once they want it, what reasons will they use to defend the choice, and are those reasons easy to find?', think: 'Reviews read after the decision is made.', flag: 'The pitch starts with specs, price or proof.' }
+      ],
+      claims: [
+        { n: 'I', title: 'The object of evaluation is ourselves, not the product.', body: 'People evaluate what a proposition makes them feel about themselves. The objective value of the product comes a distant second.' },
+        { n: 'II', title: 'The order matters.', body: 'Campaigns that lead with facts, utility or even values before securing self and belonging are gambling. Think Jaguar or Bud Light.' },
+        { n: 'III', title: 'Measure the shift, not the state.', body: 'The quantity worth measuring is the psychological delta a proposition creates, not the mood it finds people in.' }
+      ],
+      submitLogin: e => { e.preventDefault(); this.setState({ view: 'portal', tab: 'Overview' }); window.scrollTo(0, 0); },
+      email: this.state.email, setEmail: e => this.setState({ email: e.target.value }),
+      clientName: 'Meridian Group',
+      clients: [...clientList, ...clientList],
+      bars: [
+        { stat: '19,963', label: 'Posts modelled · trading platform', finding: 'Content that addressed uncertainty and the fear of looking stupid outperformed content about winning.' },
+        { stat: '60,000', label: 'Posts and fieldwork · beer brand', finding: 'Its strongest content paired beer with food. Buyers used the brand to signal discernment, not thirst.' },
+        { stat: '12', label: 'Large-scale surveys · 4 continents', finding: 'Political attitudes were predicted by anxiety, confidence and sense of control, not demographics or party.' },
+        { stat: '5–10×', label: 'Earned media efficiency vs paid', finding: 'What studying the lock delivers, alongside aggressively lower acquisition cost.' }
+      ],
+      heartA: pyramid(['Facts', 'Logic', 'Right / Wrong', 'Us / Them', 'Emotions'], ['Campaigns that fail start here', '', '', '', 'Good strategy starts here'], ['rgba(236,230,218,0.5)', '', '', '', '#b89b6a']),
+      heartB: pyramid(['Utility', 'Brand quality', 'Brand values', 'Tribe belonging', 'Self-esteem & self-definition'], ['Niche popularity, at best', 'Low brand equity', 'Popular, but short-lived', '', 'Iconic, enduring brands'], ['rgba(236,230,218,0.5)', 'rgba(236,230,218,0.5)', 'rgba(236,230,218,0.5)', '', '#b89b6a']),
+      feature: allInsights[0], insights: allInsights.slice(1),
+      practices: [
+        { n: '01', title: 'Self', q: 'Does this make me feel more empowered?', body: 'People don’t evaluate propositions for what they are. They evaluate what those propositions make them feel about themselves. What matters is the shift, not the state: how much you moved them, not where they are.', flag: 'We can describe the benefit but not the feeling.' },
+        { n: '02', title: 'Belonging', q: 'Does this make me one of us?', body: 'Group belonging is how we survive, so Us and Them thinking is a permanent feature of perception. If something lets us feel belonging and broadcast it, we want it, then justify it.', flag: 'The campaign changes who “people like us” are.' },
+        { n: '03', title: 'Values', q: 'Does this feel like the right thing to do?', body: 'Where belonging becomes rules: fairness, tradition, the world of should. Powerful, but people bend right and wrong to protect self and belonging. Lead here before securing the first two and you are gambling.', flag: 'We lead with our values before securing self and belonging.' },
+        { n: '04', title: 'Logic', q: 'Does it make sense?', body: 'In principle, error correction. In practice, motivated reasoning. Once people want something, “what reasons do I have to believe this?” becomes “what reasons can I find to keep believing it?”', flag: 'The pitch starts with specs or price.' },
+        { n: '05', title: 'Facts', q: 'Is it true?', body: 'Judged the same way. Bombarded with information, people discount evidence and fall back on instinct: what is true is what they want to be true. Start here and most of the decision is left to chance.', flag: 'The pitch starts with proof.' }
+      ],
+      sectorEyebrow: sel ? 'Sectors · ' + sel.name : 'Sectors',
+      sectorHeadline: sel ? sel.benefit : 'Where emotion decides the outcome.',
+      sectorBodyLabel: sel ? 'What we did' : 'Hover or click a sector',
+      sectorBody: sel ? sel.work : 'Wherever a decision is made by a person, the same forces apply. Hover a sector to see what we did there.',
+      sectors: sectorList.map((s, i) => { const open = activeSector === i; return { ...s, open, closed: !open, tagOp: open ? 1 : 0,
+        bg: open ? '#0e0f12' : '#ece6da', fg: open ? '#ece6da' : '#0e0f12',
+        enter: () => { if (this.state.hoverSector !== i) this.setState({ hoverSector: i }); }, leave: () => this.setState({ hoverSector: null }),
+        click: e => { e && e.preventDefault && e.preventDefault(); this.setState(st => ({ pinSector: st.pinSector === i ? null : i, hoverSector: i })); }
+      }; }),
+      sectorsOld: [
+        { n: 'i', name: 'Consumer & retail', note: 'Emotional branding for Gen Y and Gen Z audiences.' },
+        { n: 'ii', name: 'Pharma & healthcare', note: 'Trust, adherence and perception in regulated markets.' },
+        { n: 'iii', name: 'Mobility & automotive', note: 'Brand strategy, including our Japan partnership since 2018.' },
+        { n: 'iv', name: 'Technology', note: 'B2B demand, positioning and category narratives.' },
+        { n: 'v', name: 'Public affairs & campaigns', note: 'Elections and issue campaigns across the USA, Europe and Israel.' },
+        { n: 'vi', name: 'Financial services', note: 'Confidence, loyalty and crisis communication.' }
+      ],
+      steps: [
+        { title: 'Measure the shift', body: 'The psychological delta a proposition creates, not the sentiment it finds people in.' },
+        { title: 'Audit before launch', body: 'Which tribe does this let customers join, and which might it expel them from?' },
+        { title: 'Influence risk', body: 'The same architecture powers disinformation. We counter it for companies, governments and NGOs.' }
+      ],
+      offices: [
+        { role: 'Headquarters', city: 'New York', time: clock('America/New_York'), detail: '25 Kent Avenue, Brooklyn. Brand strategy, research and data.' },
+        { role: 'Research & AI', city: 'Tel Aviv', time: clock('Asia/Jerusalem'), detail: 'Behavioral science and applied AI lab. Campaign and crisis work for Europe and the Middle East.' },
+        { role: 'Partner since 2018', city: 'Tokyo', time: clock('Asia/Tokyo'), detail: 'Branding and crisis communication for multinationals in Japan.' }
+      ],
+      portalNav: tabs.map(name => ({ name, bar: name === tab ? '#b89b6a' : 'transparent', color: name === tab ? '#ece6da' : 'rgba(236,230,218,0.55)', select: () => this.setState({ tab: name }) })),
+      portalTitle: tab, portalOverview: tab === 'Overview', portalList: tab !== 'Overview', portalRows: rows[tab] || [],
+      kpis: [
+        { label: 'Emotional resonance', value: '68', delta: '+9 since wave 1' },
+        { label: 'Variants tested', value: '24', delta: '6 shortlisted' },
+        { label: 'Respondents', value: '7.2k', delta: 'Across 3 waves' },
+        { label: 'Segments modelled', value: '5', delta: 'v2 architecture' }
+      ],
+      deliverables: [
+        { name: 'Wave 3 emotional drivers report', date: 'Due Nov 6', status: 'In progress', border: '#b89b6a', fg: '#b89b6a' },
+        { name: 'Message testing: 6 variants', date: 'Delivered Oct 9', status: 'Delivered', border: 'rgba(236,230,218,0.25)', fg: 'rgba(236,230,218,0.6)' },
+        { name: 'Segment architecture v2', date: 'Delivered Sep 27', status: 'Delivered', border: 'rgba(236,230,218,0.25)', fg: 'rgba(236,230,218,0.6)' },
+        { name: 'Creative direction brief', date: 'Due Nov 20', status: 'Scheduled', border: 'rgba(236,230,218,0.25)', fg: 'rgba(236,230,218,0.6)' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
